@@ -6,6 +6,8 @@
 # @File    : check_stopwords.py
 # @Software: PyCharm
 
+import string
+
 stopwords_list = ['i', 'me', 'my', 'myself', 'we', 'our', 'ours', 'ourselves', 'you', 'your', 'yours', 'yourself',
                   'yourselves', 'he', 'him', 'his', 'himself', 'she', 'her', 'hers', 'herself', 'it', 'its',
                   'itself', 'they', 'them', 'their', 'theirs', 'themselves', 'what', 'which', 'who', 'whom',
@@ -27,8 +29,9 @@ def check_stopwords(query):
     :param query: 查询字段
     :return: 检查过后的字符串
     """
-    return ' '.join([query_item for query_item in query.strip().replace("'", " ").split()
-                     if query_item not in stopwords_list])
+    query_no_punct_str = ''.join([char if char not in string.punctuation else ' ' for char in query.strip()])
+
+    return ' '.join([query_word for query_word in query_no_punct_str.split() if query_word not in stopwords_list])
 
 
 def main():
